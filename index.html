@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pour Irina | Mon Univers</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --emerald: #50C878;
+            --midnight: #191970;
+            --electric: #0077ff;
+            --bg-soft: #f0f2f5; 
+            --white-card: #ffffff;
+        }
+
+        * { box-sizing: border-box; }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-soft);
+            color: var(--midnight);
+            margin: 0;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* --- PHOTO DISCRÈTE --- */
+        .hidden-photo {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            z-index: 1000;
+            width: 45px;
+            height: 45px;
+            background: white;
+            border-radius: 8px;
+            padding: 5px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            overflow: hidden;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            opacity: 0.8;
+            border: 2px solid var(--emerald);
+        }
+        
+        .hidden-photo:hover, .hidden-photo:active {
+            width: 150px;
+            height: 200px;
+            opacity: 1;
+            transform: translateY(-10px) rotate(2deg);
+        }
+        
+        .hidden-photo img { width: 100%; height: 85%; object-fit: cover; border-radius: 4px; }
+        .hidden-photo span { font-family: 'Dancing Script', cursive; font-size: 0.8rem; display: block; text-align: center; margin-top: 5px; }
+
+        header {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #e0e7ff 0%, #f0fdf4 100%);
+            text-align: center;
+            padding: 20px;
+        }
+
+        header h1 { 
+            font-family: 'Dancing Script', cursive; 
+            font-size: clamp(3.5rem, 12vw, 5.5rem); 
+            color: var(--midnight); 
+            margin: 0;
+            text-shadow: 2px 2px 0px rgba(80, 200, 120, 0.2);
+        }
+
+        header p.sub { color: var(--electric); font-weight: 600; letter-spacing: 2px; text-transform: uppercase; font-size: 0.9rem; margin-bottom: 10px; }
+        
+        .scroll-btn {
+            margin-top: 50px; background: var(--midnight); border: none; width: 50px; height: 50px;
+            border-radius: 50%; cursor: pointer; animation: float 3s infinite; color: var(--emerald);
+            display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            font-size: 1.5rem; text-decoration: none;
+        }
+
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+
+        .timeline-section { padding: 80px 20px; max-width: 850px; margin: auto; }
+        h2.sec-title { 
+            font-family: 'Dancing Script', cursive; font-size: 3rem; text-align: center; 
+            color: var(--midnight); border-bottom: 3px solid var(--emerald);
+            display: inline-block; margin: 0 auto 50px auto; width: 100%;
+        }
+
+        .timeline-item {
+            position: relative; padding: 35px; margin-bottom: 25px; background: var(--white-card);
+            border-radius: 25px; border-right: 5px solid var(--electric); box-shadow: 0 15px 35px rgba(0,0,0,0.05);
+        }
+
+        .timeline-date { font-weight: 600; color: var(--emerald); font-size: 1rem; }
+        .timeline-title { font-family: 'Dancing Script', cursive; font-size: 2rem; color: var(--midnight); margin: 5px 0; }
+
+        .stats-section { padding: 60px 20px; text-align: center; background: white; }
+        .stats-grid { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; max-width: 900px; margin: 30px auto; }
+        .stat-card { background: var(--bg-soft); padding: 25px; border-radius: 20px; min-width: 200px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); border-bottom: 4px solid transparent; }
+        .stat-tiktok { border-color: black; }
+        .stat-snap { border-color: #FFFC00; }
+        .stat-days { border-color: var(--emerald); }
+        .stat-value { font-size: 2.2rem; font-weight: 700; display: block; }
+        .stat-label { font-size: 0.85rem; color: #666; text-transform: uppercase; }
+
+        .distance-note {
+            text-align: center; padding: 60px 30px; background: linear-gradient(90deg, var(--midnight), var(--electric));
+            color: white; border-radius: 30px; margin: 40px 20px;
+        }
+
+        .counter-section { padding: 80px 20px; text-align: center; }
+        #timer { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; max-width: 600px; margin: 40px auto; }
+        @media (min-width: 600px) { #timer { grid-template-columns: repeat(4, 1fr); } }
+        
+        .timer-unit { background: var(--midnight); padding: 25px; border-radius: 20px; color: white; }
+        .timer-unit span { font-size: 2.5rem; font-weight: 600; color: var(--emerald); }
+
+        .stones-section { padding: 80px 20px; text-align: center; }
+        .stone-grid { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-top: 40px; }
+        .stone-item {
+            width: 140px; height: 120px; background: var(--white-card); border: 2px solid var(--emerald);
+            border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; display: flex; align-items: center; 
+            justify-content: center; cursor: pointer; transition: 0.4s; font-weight: 600;
+        }
+        .stone-item:hover { background: var(--emerald); color: white; }
+
+        .obs-section { padding: 100px 20px; background: var(--midnight); color: #fff; }
+        .obs-container { max-width: 700px; margin: auto; }
+        .obs-item { margin-bottom: 45px; padding-left: 25px; border-left: 4px solid var(--emerald); position: relative; }
+        .obs-item h3 { font-family: 'Dancing Script', cursive; font-size: 2.2rem; color: var(--emerald); }
+
+        .size-viz { display: flex; align-items: flex-end; justify-content: center; gap: 50px; margin: 40px 0; }
+        .size-bar { width: 45px; border-radius: 10px 10px 0 0; position: relative; }
+        .bar-me { height: 180px; background: var(--electric); }
+        .bar-her { height: 145px; background: var(--emerald); }
+        .bar-her::after { content: "❤️"; position: absolute; top: -30px; left: 10px; font-size: 1.2rem; }
+        .size-label { font-size: 0.8rem; margin-top: 10px; text-align: center; }
+
+        .tease-section { padding: 80px 20px; text-align: center; background: #e0e7ff; overflow: hidden; }
+        .tease-container {
+            background: var(--white-card); padding: 40px; border-radius: 25px;
+            max-width: 600px; margin: auto; border: 2px solid var(--midnight);
+            position: relative; text-align: left;
+        }
+        .tease-container h2 { font-family: 'Dancing Script', cursive; font-size: 2.5rem; text-align: center; margin-top: 0; }
+        textarea { width: 100%; border-radius: 15px; padding: 15px; margin-top: 10px; border: 1px solid #ccc; font-family: inherit; resize: none; }
+        .submit-wrap { position: relative; margin-top: 30px; height: 120px; display: flex; justify-content: center; align-items: center; }
+        .btn-tease {
+            position: absolute; padding: 15px 35px; border: none; background: var(--midnight);
+            color: white; border-radius: 50px; font-size: 1.1rem; font-weight: 600;
+            cursor: pointer; transition: transform 0.2s ease-out; z-index: 100;
+        }
+
+        .emerald-fall { position: fixed; top: -20px; z-index: 9999; pointer-events: none; animation: fall linear forwards; }
+        @keyframes fall { to { transform: translateY(105vh) rotate(360deg); } }
+
+        .modal {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(10, 10, 40, 0.7); z-index: 2000;
+            justify-content: center; align-items: center; padding: 20px; backdrop-filter: blur(8px);
+        }
+        .modal-content { background: white; padding: 40px; border-radius: 30px; max-width: 500px; width: 100%; position: relative; text-align: center; }
+        .close-modal { position: absolute; top: 15px; right: 25px; font-size: 2rem; cursor: pointer; }
+
+        .magic-section { padding: 100px 20px; text-align: center; background: white; }
+        .btn-compliment { padding: 20px 45px; border: none; background: linear-gradient(var(--electric), var(--midnight)); color: white; border-radius: 50px; font-size: 1.2rem; cursor: pointer; font-weight: 600; }
+        #compliment-text { margin-top: 35px; font-weight: 600; color: var(--midnight); font-size: 1.3rem; font-style: italic; min-height: 40px; }
+
+        footer { padding: 60px 20px; text-align: center; font-size: 0.8rem; opacity: 0.4; }
+
+        /* --- AJOUTS SPECIFIQUES POUR TELEPHONE (Ne change rien sur ordi) --- */
+        @media (max-width: 768px) {
+            .stats-grid { flex-direction: column; align-items: center; }
+            .stat-card { width: 80%; }
+            .distance-note { margin: 20px 10px; padding: 40px 15px; }
+            .size-viz { gap: 20px; }
+            .btn-tease { padding: 12px 25px; font-size: 1rem; } /* Plus facile a toucher */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="hidden-photo">
+        <img src="photo_I.png" alt="Irina">
+        <span>La folle du bus ✨</span>
+    </div>
+
+    <header>
+        <p class="sub">Un univers pour ma brunette 🐼</p>
+        <h1>Irina.</h1>
+        <p>1m50 de magie et de caractère ✨</p>
+        <a href="#histoire" class="scroll-btn" id="arrowBtn">↓</a>
+    </header>
+
+    <section id="histoire" class="timeline-section">
+        <center><h2 class="sec-title">Notre Histoire</h2></center>
+        <div class="timeline-item">
+            <span class="timeline-date">3 Juillet 2025</span>
+            <h3 class="timeline-title">La Connexion</h3>
+            <p>Tout a commencé par quelques mots sur un écran. Depuis ce jour, pas une seule journée ne s'est passée sans que tu sois dans mes pensées.</p>
+        </div>
+        <div class="timeline-item">
+            <span class="timeline-date">12 Février 2026</span>
+            <h3 class="timeline-title">La Réalité</h3>
+            <p>Te voir pour la première fois... j'étais un peu timide, je l'avoue. Mais c'est parce que tu m'impressionnes encore un peu.</p>
+        </div>
+        <div class="timeline-item">
+            <span class="timeline-date">12 Avril 2026</span>
+            <h3 class="timeline-title">La Tendresse</h3>
+            <p>Notre premier vrai câlin. Ce moment où la distance disparaît et où je me sens comme sur des nuages.</p>
+        </div>
+        <div class="timeline-item" style="border-right: 5px dashed var(--emerald); background: rgba(80, 200, 120, 0.05);">
+            <span class="timeline-date">Prochainement...</span>
+            <h3 class="timeline-title">L'instant Suspendu</h3>
+            <p>Un moment de complicité encore plus proche... Ma timidité s'envolera petit à petit pour laisser place à l'avenir et à ce qu'il nous réserve.</p>
+        </div>
+    </section>
+
+    <section class="stats-section">
+        <h2 style="font-family: 'Dancing Script', cursive; font-size: 2.8rem;">Nos Exploits ✨</h2>
+        <div class="stats-grid">
+            <div class="stat-card stat-tiktok">
+                <span class="stat-label">Flammes TikTok</span>
+                <span class="stat-value">271 🔥</span>
+            </div>
+            <div class="stat-card stat-snap">
+                <span class="stat-label">Flammes Snap</span>
+                <span class="stat-value">142 ⚡</span>
+            </div>
+            <div class="stat-card stat-days">
+                <span class="stat-label">Officiellement</span>
+                <span class="stat-value">18 Jours</span>
+            </div>
+        </div>
+    </section>
+
+    <div class="distance-note">
+        <h2 style="font-family: 'Dancing Script', cursive; margin-top:0;">Plus qu'une simple distance.</h2>
+        <p>Ce que je ressens pour toi est bien plus grand que les kilomètres qui nous séparent. Je t'aime vraiment, Irina.</p>
+    </div>
+
+    <section id="compteur" class="counter-section">
+        <h2 style="font-family: 'Dancing Script', cursive; font-size: 2.8rem;">À tes côtés depuis...</h2>
+        <div id="timer">
+            <div class="timer-unit"><span id="days">0</span><br><small>Jours</small></div>
+            <div class="timer-unit"><span id="hours">0</span><br><small>Heures</small></div>
+            <div class="timer-unit"><span id="mins">0</span><br><small>Mins</small></div>
+            <div class="timer-unit"><span id="secs">0</span><br><small>Secs</small></div>
+        </div>
+    </section>
+
+    <section class="stones-section">
+        <h2 style="font-family: 'Dancing Script', cursive; font-size: 3rem;">Pierres pour toi</h2>
+        <div class="stone-grid">
+            <div class="stone-item" onclick="openModal('L\'Émeraude', 'Symbole de la renaissance et de l\'amour sincère.')">Émeraude</div>
+            <div class="stone-item" onclick="openModal('L\'Azurite', 'Favorise l\'intuition et la créativité.')">Azurite</div>
+            <div class="stone-item" onclick="openModal('La Malachite', 'Pierre de protection.')">Malachite</div>
+            <div class="stone-item" onclick="openModal('Le Lapis-Lazuli', 'Symbole de vérité et d\'amitié.')">Lapis-Lazuli</div>
+        </div>
+    </section>
+
+    <section class="obs-section">
+        <div class="obs-container">
+            <h2 style="font-family: 'Dancing Script', cursive; font-size: 3rem; color: var(--emerald);">Mes Notes Secrètes</h2>
+            <div class="size-viz">
+                <div style="display:flex; flex-direction:column; align-items:center;">
+                    <div class="size-bar bar-me"></div>
+                    <span class="size-label">Moi (1m90)</span>
+                </div>
+                <div style="display:flex; flex-direction:column; align-items:center;">
+                    <div class="size-bar bar-her"></div>
+                    <span class="size-label">Toi (1m50)</span>
+                </div>
+            </div>
+            <div class="obs-item">
+                <span style="position:absolute; right:10px; top:0; font-size:2rem; opacity:0.3;">🌵</span>
+                <h3>L'effet Cactus</h3>
+                <p>Je suis sûr que tu serais la plus mignonne de tous les cactus. Mais n'oublie pas les petits pompons roses quand même.</p>
+            </div>
+            <div class="obs-item">
+                <span style="position:absolute; right:10px; top:0; font-size:2rem; opacity:0.3;">🐼</span>
+                <h3>Mon Petit Panda</h3>
+                <p>Mignonne, rare et un peu dormeuse. Un vrai petit panda quoi.</p>
+            </div>
+            <div class="obs-item">
+                <h3>Ma petite timidité</h3>
+                <p>Si je suis parfois réservé, c'est juste que mon cœur bat trop fort près de toi.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="tease-section">
+        <div class="tease-container">
+            <h2>Bureau des Réclamations</h2>
+            <p>Une plainte ? Vas-y, écris ce que tu veux !</p>
+            <textarea rows="4" placeholder="Ex: Tu es trop grand, arrête stp..."></textarea>
+            <div class="submit-wrap">
+                <!-- Ajout de ontouchstart pour que le bouton s'enfuit aussi au doigt sur mobile -->
+                <button class="btn-tease" id="teaseBtn" onmouseover="moveAndShrink()" ontouchstart="moveAndShrink()">Envoyer</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="magic-section">
+        <button class="btn-compliment" onclick="magicCompliment()">Un mot doux ? ✨</button>
+        <div id="compliment-text">Clique pour voir...</div>
+    </section>
+
+    <div id="stoneModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal()">&times;</span>
+            <h3 id="modalTitle" style="font-family: 'Dancing Script', cursive; font-size: 2.5rem; color: var(--midnight);"></h3>
+            <p id="modalBody"></p>
+        </div>
+    </div>
+
+    <footer>❤️ Pour Irina • Mon Petit Panda • 2026</footer>
+
+    <script>
+        // --- SCROLL DOUX ---
+        document.getElementById('arrowBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            const target = document.querySelector('#histoire');
+            window.scrollTo({ top: target.offsetTop, behavior: 'smooth' });
+        });
+
+        // --- COMPTEUR ---
+        const startDate = new Date("July 3, 2025 00:00:00").getTime();
+        setInterval(function() {
+            const now = new Date().getTime();
+            const diff = now - startDate;
+            document.getElementById("days").innerText = Math.floor(diff / (1000 * 60 * 60 * 24));
+            document.getElementById("hours").innerText = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            document.getElementById("mins").innerText = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            document.getElementById("secs").innerText = Math.floor((diff % (1000 * 60)) / 1000);
+        }, 1000);
+
+        // --- BOUTON TROLL (Version Améliorée) ---
+        let scale = 1.0;
+        let lastX = 0;
+        let lastY = 0;
+
+        function moveAndShrink() {
+            const btn = document.getElementById('teaseBtn');
+            let newX, newY, distance;
+            const minJump = 100; 
+
+            do {
+                newX = Math.random() * 340 - 170;
+                newY = Math.random() * 140 - 70;
+                distance = Math.sqrt(Math.pow(newX - lastX, 2) + Math.pow(newY - lastY, 2));
+            } while (distance < minJump);
+
+            lastX = newX;
+            lastY = newY;
+
+            if (scale > 0.25) scale -= 0.07; 
+            btn.style.transform = `translate(${newX}px, ${newY}px) scale(${scale})`;
+            
+            if (scale < 0.75) btn.innerText = "Trop lente ! 🐼";
+            if (scale < 0.5) btn.innerText = "Raté petit panda !";
+            if (scale < 0.35) {
+                btn.innerText = "💤 🐼"; 
+                btn.style.opacity = "0.7";
+            }
+        }
+
+        // --- COMPLIMENTS MAGIQUES ---
+        const compliments = [
+            "Tu es magnifique.", 
+            "J'aime ton caractère (pipelette va).", 
+            "1m50 de pur bonheur.", 
+            "Tu es mon émeraude.", 
+            "I (x^2+y^2-1)^3-x^2y^3=0 you ❤️",
+            "J'ai hâte de te revoir.",
+            "La fameuse liste... 📺"
+        ];
+        function magicCompliment() {
+            document.getElementById("compliment-text").innerText = compliments[Math.floor(Math.random() * compliments.length)];
+            for(let i=0; i<15; i++) { createEmerald(); }
+        }
+
+        function createEmerald() {
+            const p = document.createElement('div');
+            p.className = 'emerald-fall';
+            p.innerText = ['💎', '💚', '✨', '🎋', '🐼'][Math.floor(Math.random()*5)];
+            p.style.left = Math.random() * 100 + 'vw';
+            p.style.fontSize = (Math.random() * 20 + 10) + 'px';
+            p.style.animationDuration = (Math.random() * 2 + 2) + 's';
+            document.body.appendChild(p);
+            setTimeout(() => p.remove(), 3000);
+        }
+
+        // --- MODAL PIERRES ---
+        function openModal(title, text) {
+            document.getElementById("modalTitle").innerText = title;
+            document.getElementById("modalBody").innerText = text;
+            document.getElementById("stoneModal").style.display = "flex";
+        }
+        function closeModal() { document.getElementById("stoneModal").style.display = "none"; }
+        
+        window.onclick = function(event) {
+            if (event.target == document.getElementById("stoneModal")) closeModal();
+        }
+    </script>
+</body>
+</html>
